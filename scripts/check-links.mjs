@@ -36,9 +36,15 @@ const INVENTORY = ["REPOS.md", "VERSION.md"];
 
 const FILES = [...CURATED, ...INVENTORY];
 
-// A repository that certainly exists and is certainly public. If this one cannot
-// be read, the credential is the problem, not the map.
-const SENTINEL = "wazoo-api";
+// Repositories the curated map depends on. Their absence from the *organization
+// listing* means the listing is truncated.
+//
+// Reading a single public repository is deliberately NOT the test: any token
+// can do that, including a GITHUB_TOKEN scoped to this repository. Such a token
+// would resolve every curated link to "ok" and return a near-empty org listing,
+// so the radar would report a confident, completely blind "all clear". A radar
+// that cannot fail is worse than no radar, so the listing is the sentinel.
+const ORG_SENTINELS = ["wazoo-api", "worlds-api", "docs.wazoo.dev", "wazoo-skills"];
 
 const ISSUE_TITLE = "Drift radar: the platform map is out of date";
 const ISSUE_MARKER = "<!-- drift-radar -->";
@@ -219,22 +225,31 @@ function fileIssue(body, { clean }) {
 }
 
 function main() {
-  // Preflight: can this credential see the organization at all?
-  const sentinel = repoState(SENTINEL);
-  if (sentinel.state === "missing") {
+  // Preflight: is the organization listing complete? A truncated listing is the
+  // dangerous case here — every link would still resolve, so the radar would
+  // report a confident and entirely blind "all clear".
+  const org = listOrgRepos();
+  if (org === null) {
     console.error(
-      `Cannot read ${OWNER}/${SENTINEL}, so the organization's repositories are not visible\n` +
-        "to this credential. That is a credentials problem, not map drift — refusing to\n" +
-        "report every repository as missing.\n\n" +
+      `Could not list ${OWNER}'s repositories, so the organization's repositories are\n` +
+        "not visible to this credential. That is a credentials problem, not map drift.\n\n" +
         "Fix: give the workflow a token with read access to the organization, as the\n" +
         "GH_ORG_TOKEN secret. A GITHUB_TOKEN scoped to this repository is not enough.",
     );
     process.exit(2);
   }
 
-  const org = listOrgRepos();
-  if (org === null) {
-    console.error("Could not list the organization's repositories. Same credentials problem as above.");
+  const visible = new Set(org.map((r) => r.name));
+  const absent = ORG_SENTINELS.filter((n) => !visible.has(n));
+  if (absent.length > 0) {
+    console.error(
+      `The organization listing is incomplete: ${absent.map((n) => `${OWNER}/${n}`).join(", ")}\n` +
+        `not present. ${org.length} repositories were visible, which is not the whole\n` +
+        "organization. Every curated link would still resolve, so this run would\n" +
+        "otherwise report a clean, completely blind pass.\n\n" +
+        "Fix: give the workflow a token with read access to the organization, as the\n" +
+        "GH_ORG_TOKEN secret. A GITHUB_TOKEN scoped to this repository is not enough.",
+    );
     process.exit(2);
   }
 
