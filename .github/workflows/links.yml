@@ -1,0 +1,55 @@
+# Map upkeep for wazootech/wazootech.
+#
+# This is the whole point of the repository: upkeep is a scheduled job, not
+# something anyone has to remember. It files a single tracking issue with the
+# diff rather than failing silently, so the map is always someone's next action.
+#
+# CREDENTIALS: this workflow needs a token that can READ the organization's
+# repositories. The automatic GITHUB_TOKEN is scoped to this repository alone and
+# will see every other wazootech repo as missing, so it is not sufficient. Add a
+# repository secret named GH_ORG_TOKEN holding a token with read access to the
+# organization. Until it exists, both steps fail with an explicit message rather
+# than a false "52 repositories are missing" alarm.
+#
+# No setup steps: node and gh are both preinstalled on the runner, and this
+# repository has no dependencies to install.
+
+name: Map upkeep
+
+on:
+  schedule:
+    # Mondays, 06:17 UTC. An off-round minute, so this does not pile onto the
+    # top-of-hour crowd that every other scheduled workflow in the org shares.
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - README.md
+      - INSTALL.md
+      - AGENTS.md
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: map-upkeep
+  cancel-in-progress: false
+
+jobs:
+  upkeep:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_ORG_TOKEN || github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check generated files are current
+        run: node scripts/generate.mjs --check
+
+      - name: Check links and file the drift issue
+        # Runs even if the previous step failed: a stale inventory and a broken
+        # link are independent problems and both deserve to be reported.
+        if: always()
+        run: node scripts/check-links.mjs --file-issue
