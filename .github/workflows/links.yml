@@ -4,12 +4,19 @@
 # something anyone has to remember. It files a single tracking issue with the
 # diff rather than failing silently, so the map is always someone's next action.
 #
-# CREDENTIALS: this workflow needs a token that can READ the organization's
-# repositories. The automatic GITHUB_TOKEN is scoped to this repository alone and
-# will see every other wazootech repo as missing, so it is not sufficient. Add a
-# repository secret named GH_ORG_TOKEN holding a token with read access to the
-# organization. Until it exists, both steps fail with an explicit message rather
-# than a false "52 repositories are missing" alarm.
+# CREDENTIALS: no setup required. The automatic GITHUB_TOKEN is sufficient,
+# because this is a public map and every repository it inspects is public.
+#
+# This was not believed at first. An earlier version of this comment claimed the
+# automatic token could not read the organization at all, and required a
+# GH_ORG_TOKEN secret. That was wrong: such a token reads public repositories
+# fine and simply cannot see private ones — which this repository deliberately
+# ignores. Measured on a real run, the automatic token completed both steps.
+#
+# GH_ORG_TOKEN is still honoured as an override, and both scripts still verify
+# that the organization listing is complete before trusting it. If a token ever
+# cannot list the organization's public repositories, both steps exit 2 naming
+# what they could not see, rather than reporting a confident false result.
 #
 # No setup steps: node and gh are both preinstalled on the runner, and this
 # repository has no dependencies to install.

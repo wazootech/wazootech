@@ -78,21 +78,27 @@ radar nobody reads.
 It also diffs the organization's repository list against `REPOS.md` so **new**
 repositories are surfaced, and files the result as a single open issue.
 
-### The workflow needs a credential
+### The workflow needs no credential
 
-The automatic `GITHUB_TOKEN` is scoped to this repository alone, so it cannot see
-the organization's other repositories. Both scripts check this before doing any
-work and exit `2` with an explanation:
+The automatic `GITHUB_TOKEN` is enough, because this is a public map: every
+repository it inspects is public, and a scoped token reads public repositories
+fine. Confirmed on a real run — both steps complete with no secret configured.
 
-- `generate.mjs` refuses to build an inventory from a partial view. Without the
-  check it would return a short list, and `--check` would then blame the
-  committed `REPOS.md` for being stale — pointing the fix at the wrong file.
-- `check-links.mjs` refuses to resolve links, because a scoped token makes every
-  repository in the organization look missing.
+An earlier version of this file claimed a `GH_ORG_TOKEN` secret was required,
+on the assumption that a scoped token cannot read the organization at all. That
+was wrong, and it is the kind of wrong that hides: the requirement was
+documented as a hard gate, so the upkeep job looked blocked when it was not.
 
-The job requires a repository secret named **`GH_ORG_TOKEN`** holding a token
-with read access to the organization. Without it the job fails loudly instead of
-reporting a false alarm.
+What the token genuinely cannot do is see *private* repositories, which is why
+`generate.mjs` does not report how many of them exist. That count used to be in
+`REPOS.md`, and it made the workflow's output differ from a maintainer's, so
+`--check` reported drift on every push. The number was not reproducible and not
+worth publishing.
+
+Both scripts still verify the organization listing is complete before trusting
+it. If a token cannot list the organization's public repositories, both exit `2`
+naming what they could not see — a radar that cannot fail is worse than no
+radar, and a generator that cannot tell it is half-blind is worse than none.
 
 If that workflow is ever removed, this repository becomes a fourth hand-maintained
 surface that silently rots — which is what happened to the organization's retired
@@ -117,8 +123,8 @@ generator only keeps the inventory honest.
 
 This repository is public. **No private repository name appears in it** — not in
 `README.md`, not in `INSTALL.md`, and not in the generated `REPOS.md`. The
-generator filters the inventory to public repositories and reports only a *count*
-of the internal ones it omitted.
+generator filters the inventory to public repositories and says nothing further
+about the rest, not even how many there are.
 
 If a task requires documenting private repositories, that documentation belongs
 in the internal harness, not here.
