@@ -151,7 +151,6 @@ const cell = (value) => String(value ?? "").replace(/\|/g, "\\|").replace(/\s+/g
 
 function renderRepos(repos) {
   const publicRepos = repos.filter((r) => !r.private);
-  const internal = repos.length - publicRepos.length;
   const current = publicRepos.filter((r) => !r.archived).sort((a, b) => a.name.localeCompare(b.name));
   const archived = publicRepos.filter((r) => r.archived).sort((a, b) => a.name.localeCompare(b.name));
 
@@ -176,10 +175,13 @@ Every public repository in the \`${OWNER}\` organization: **${current.length} cu
 **${archived.length} archived**. Generated from the organization, so it is never
 out of date by neglect.
 
-Private repositories are intentionally not listed. ${internal} internal
-${
-    internal === 1 ? "repository is" : "repositories are"
-  } omitted by design — this is a public map.
+Private repositories are omitted — this is a public map.
+
+The count of them is deliberately absent. How many private repositories exist is
+both unnecessary to a reader and not reproducible: it depends on whether the
+generating credential can see private repositories at all, so the file would
+differ between a maintainer's token and the workflow's, and \`--check\` would
+report drift that does not exist.
 
 The curated view of the platform — the ones worth reading first — is the table in
 [README.md](README.md).
