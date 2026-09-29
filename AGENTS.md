@@ -87,9 +87,9 @@ token with read access to the organization. Without it the job exits `2` and
 says so, rather than reporting a false alarm.
 
 If that workflow is ever removed, this repository becomes a fourth hand-maintained
-surface that silently rots — which is the outcome `wazoopedia` had, and the reason
-it is archived. **If the check cannot run, delete this repository instead of
-leaving it stale.**
+surface that silently rots — which is what happened to the organization's retired
+knowledge base, and the reason it is archived rather than maintained. **If the
+check cannot run, delete this repository instead of leaving it stale.**
 
 ## Adding a repository to the showcase
 

@@ -119,8 +119,8 @@ public, so that setup is documented in the internal workspace harness rather
 than here. This repository deliberately does not list private repositories, and
 it is not the place to record how to check them out.
 
-If you have access and want the harness, the entry point is the `workspace`
-repository in this organization.
+If you have access and want the harness, the entry point is the organization's
+internal workspace repository.
 
 ---
 

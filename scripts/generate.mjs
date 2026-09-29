@@ -211,8 +211,8 @@ ${rows.join("\n")}
 
 arsumbris pins one tag across every part of its system, so a version there is
 meaningful. Wazoo has no equivalent, and writing commit hashes here would imply
-a coherence that does not exist. Adding one is tracked as an open question in
-[wazootech/workspace#149](https://github.com/wazootech/workspace/issues/149).
+a coherence that does not exist. Whether to adopt one is an open question, tracked
+with the rest of this repository's upkeep decisions.
 `;
 }
 
