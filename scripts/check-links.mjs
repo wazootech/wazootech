@@ -165,33 +165,55 @@ function report(states, unlisted) {
   }
 
   if (drift.length === 0 && unlisted.length === 0) {
-    lines.push("", "Nothing to do. This issue closes itself on the next clean run.");
+    lines.push(
+      "",
+      "Nothing to do. The map matches the organization, and any open drift issue",
+      "from a previous run was closed by this one.",
+    );
   }
 
   return lines.join("\n");
 }
 
-function fileIssue(body) {
+/**
+ * Keep exactly one drift issue. `clean` closes it instead of editing it, so a
+ * resolved map retires its own reminder rather than leaving a stale one open.
+ *
+ * `gh issue list --json` only returns the fields asked for, so the title has to
+ * be requested: filtering a list that has no `title` field silently matches
+ * nothing and opens a fresh issue on every run.
+ */
+function fileIssue(body, { clean }) {
+  const repo = `${OWNER}/wazootech`;
   const existing = JSON.parse(
-    gh(["issue", "list", "--repo", `${OWNER}/wazootech`, "--state", "open", "--search", ISSUE_TITLE, "--json", "number"], {
+    gh(["issue", "list", "--repo", repo, "--state", "open", "--search", ISSUE_TITLE, "--json", "number,title"], {
       allowFail: true,
     }) ?? "[]",
   );
-  const target = existing.find((i) => i.title === ISSUE_TITLE);
-  if (target) {
-    gh(["issue", "edit", String(target.number), "--repo", `${OWNER}/wazootech`, "--body", body]);
-    console.log(`updated drift issue #${target.number}`);
+  const targets = existing.filter((i) => i.title === ISSUE_TITLE);
+
+  if (clean) {
+    for (const issue of targets) {
+      gh(["issue", "close", String(issue.number), "--repo", repo, "--comment", "Clean run: no drift. Closing."], {
+        allowFail: true,
+      });
+      console.log(`closed drift issue #${issue.number}`);
+    }
+    if (targets.length === 0) console.log("clean: no open drift issue to close");
+    return;
+  }
+
+  if (targets.length > 0) {
+    for (const issue of targets.slice(1)) {
+      gh(["issue", "close", String(issue.number), "--repo", repo, "--comment", `Duplicate of #${targets[0].number}.`], {
+        allowFail: true,
+      });
+      console.log(`closed duplicate drift issue #${issue.number}`);
+    }
+    gh(["issue", "edit", String(targets[0].number), "--repo", repo, "--body", body]);
+    console.log(`updated drift issue #${targets[0].number}`);
   } else {
-    const url = gh([
-      "issue",
-      "create",
-      "--repo",
-      `${OWNER}/wazootech`,
-      "--title",
-      ISSUE_TITLE,
-      "--body",
-      body,
-    ]);
+    const url = gh(["issue", "create", "--repo", repo, "--title", ISSUE_TITLE, "--body", body]);
     console.log(`opened drift issue: ${url}`);
   }
 }
@@ -231,8 +253,10 @@ function main() {
   const expectedArchived = states.filter((x) => x.state === "archived" && !x.strict);
   const body = report(states, unlisted);
 
+  const clean = drift.length === 0 && unlisted.length === 0;
+
   if (process.argv.includes("--file-issue")) {
-    fileIssue(body);
+    fileIssue(body, { clean });
   } else {
     console.log(body);
   }

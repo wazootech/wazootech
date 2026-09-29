@@ -15,7 +15,7 @@ the repositories that make up the platform.
   quickstart that matches what you want to do.
 - **Looking for one specific repo?** [REPOS.md](REPOS.md) is the full inventory,
   generated from the org, with archived and current status.
-- **Evaluating Wazoo?** [wazoo.dev](https://wazootech/wazoo.dev) is the product
+- **Evaluating Wazoo?** [wazoo.dev](https://wazoo.dev) is the product
   site and [docs.wazoo.dev](https://github.com/wazootech/docs.wazoo.dev) is the
   documentation. This repo does not restate either.
 

@@ -18,7 +18,7 @@ No cloning. The platform runs as a service.
 
 | What | Where |
 | --- | --- |
-| Product site | [wazoo.dev](https://wazootech/wazoo.dev) |
+| Product site | [wazoo.dev](https://wazoo.dev) |
 | Console (sign in, manage worlds) | [console.wazoo.dev](https://console.wazoo.dev) |
 | Platform API (control plane) | [api.wazoo.dev](https://api.wazoo.dev) |
 | Worlds API (data plane) | [data.wazoo.dev](https://data.wazoo.dev) |
