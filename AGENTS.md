@@ -81,10 +81,18 @@ repositories are surfaced, and files the result as a single open issue.
 ### The workflow needs a credential
 
 The automatic `GITHUB_TOKEN` is scoped to this repository alone, so it cannot see
-the other 52 repositories in the organization — every one of them would look
-missing. The job requires a repository secret named **`GH_ORG_TOKEN`** holding a
-token with read access to the organization. Without it the job exits `2` and
-says so, rather than reporting a false alarm.
+the organization's other repositories. Both scripts check this before doing any
+work and exit `2` with an explanation:
+
+- `generate.mjs` refuses to build an inventory from a partial view. Without the
+  check it would return a short list, and `--check` would then blame the
+  committed `REPOS.md` for being stale — pointing the fix at the wrong file.
+- `check-links.mjs` refuses to resolve links, because a scoped token makes every
+  repository in the organization look missing.
+
+The job requires a repository secret named **`GH_ORG_TOKEN`** holding a token
+with read access to the organization. Without it the job fails loudly instead of
+reporting a false alarm.
 
 If that workflow is ever removed, this repository becomes a fourth hand-maintained
 surface that silently rots — which is what happened to the organization's retired
