@@ -28,6 +28,12 @@ on:
       - README.md
       - INSTALL.md
       - AGENTS.md
+      # The upkeep logic is part of the surface it checks. A fix to the radar
+      # that cannot itself be validated is how a radar quietly stops working;
+      # this filter originally listed only the prose files, so editing
+      # scripts/ ran nothing at all.
+      - "scripts/**"
+      - ".github/workflows/links.yml"
 
 permissions:
   contents: read
