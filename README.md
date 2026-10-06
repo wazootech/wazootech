@@ -37,8 +37,8 @@ the repositories that make up the platform.
 | **Agent tooling** | [wazoo-tools](https://github.com/wazootech/wazoo-tools) | `@wazoo/tools` — AI SDK tools over Worlds knowledge graphs |
 | | [wazoo-cli](https://github.com/wazootech/wazoo-cli) | Command-line access with SHACL validation and SPARQL querying |
 | | [wazoo-skills](https://github.com/wazootech/wazoo-skills) | Agent skills for the platform, via `npx skills add wazootech/wazoo-skills` |
-| **Storage** | [worlds-libsql](https://github.com/wazootech/worlds-libsql) | libSQL/Turso adapter — the backend used by the hosted platform |
-| | [worlds-sqlite](https://github.com/wazootech/worlds-sqlite) · [worlds-postgres](https://github.com/wazootech/worlds-postgres) · [worlds-cloudflare](https://github.com/wazootech/worlds-cloudflare) · [worlds-indexeddb](https://github.com/wazootech/worlds-indexeddb) | SQLite, PostgreSQL, Cloudflare D1 and browser IndexedDB adapters |
+| **Storage** | [worlds-cloudflare](https://github.com/wazootech/worlds-cloudflare) | Cloudflare D1 adapter — the backend used by the hosted platform |
+| | [worlds-sqlite](https://github.com/wazootech/worlds-sqlite) · [worlds-postgres](https://github.com/wazootech/worlds-postgres) · [worlds-libsql](https://github.com/wazootech/worlds-libsql) · [worlds-indexeddb](https://github.com/wazootech/worlds-indexeddb) | SQLite, PostgreSQL, libSQL/Turso and browser IndexedDB adapters |
 | **Docs** | [docs.wazoo.dev](https://github.com/wazootech/docs.wazoo.dev) | Product documentation |
 | | [wazoo.dev](https://github.com/wazootech/wazoo.dev) | The product site |
 
@@ -62,8 +62,8 @@ and nothing here needs to be kept in sync with it beyond the link working.
                           (in-process graph ops)
                                  │
                     ┌────────────┴────────────┐
-              worlds-libsql            worlds-sqlite · postgres
-              (hosted, Turso)           cloudflare · indexeddb
+              worlds-cloudflare        worlds-sqlite · postgres
+              (hosted, D1)             libsql · indexeddb
 ```
 
 `worlds-api` is the single source of truth for world **data, lifecycle, storage
@@ -89,10 +89,10 @@ The rules that keep this repository minimal are in [AGENTS.md](AGENTS.md).
 
 ## Status
 
-The hosted platform is in private beta. The durable-backend adapters other than
-libSQL ship scaffolds, not full implementations — see
-[docs.wazoo.dev](https://github.com/wazootech/docs.wazoo.dev) for what is
-actually usable today.
+The hosted platform is in private beta, and runs on Cloudflare Workers with D1.
+Each storage adapter ships its own SDK factory, and several have open features —
+see [docs.wazoo.dev](https://github.com/wazootech/docs.wazoo.dev) and each
+repository's README for what is usable today.
 
 ## License
 

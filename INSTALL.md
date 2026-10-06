@@ -69,11 +69,13 @@ Versions come from each registry at the time this file was written and are
 regenerated weekly — see [VERSION.md](VERSION.md). A repository with a package
 version here is not a promise that the package is feature-complete.
 
-**`@worlds/libsql` is the only adapter with a complete implementation.** The
-others ship scaffolds. If you are choosing a backend, choose libSQL; if you are
-building one, start from
-[worlds-libsql](https://github.com/wazootech/worlds-libsql) as the reference
-shape.
+All five adapters ship a `create*WorldsSdk` factory and pass the shared parity
+suite, so the choice is deployment-shaped rather than a completeness ladder: the
+hosted platform runs on `@worlds/cloudflare` (D1), a local process usually wants
+`@worlds/sqlite`, and a managed remote database wants `@worlds/libsql`. Each
+repository's README states what its adapter still lacks. If you are implementing
+a new backend, follow the parity suite in
+[worlds-sdk-ts](https://github.com/wazootech/worlds-sdk-ts).
 
 `@wazoo/worlds-kit` (the React composition framework) is not published to a
 registry yet — clone [worlds-kit](https://github.com/wazootech/worlds-kit) and
