@@ -16,13 +16,13 @@ deliberately does not restate it.
 
 No cloning. The platform runs as a service.
 
-| What | Where |
-| --- | --- |
-| Product site | [wazoo.dev](https://wazoo.dev) |
-| Console (sign in, manage worlds) | [console.wazoo.dev](https://console.wazoo.dev) |
-| Platform API (control plane) | [api.wazoo.dev](https://api.wazoo.dev) |
-| Worlds API (data plane) | [data.wazoo.dev](https://data.wazoo.dev) |
-| Documentation | [docs.wazoo.dev](https://github.com/wazootech/docs.wazoo.dev) |
+| What                             | Where                                                         |
+| -------------------------------- | ------------------------------------------------------------- |
+| Product site                     | [wazoo.dev](https://wazoo.dev)                                |
+| Console (sign in, manage worlds) | [console.wazoo.dev](https://console.wazoo.dev)                |
+| Platform API (control plane)     | [api.wazoo.dev](https://api.wazoo.dev)                        |
+| Worlds API (data plane)          | [data.wazoo.dev](https://data.wazoo.dev)                      |
+| Documentation                    | [docs.wazoo.dev](https://github.com/wazootech/docs.wazoo.dev) |
 
 The hosted platform is in **private beta** — accounts are invited. Start with the
 [onboarding guide](https://github.com/wazootech/docs.wazoo.dev) in
@@ -53,21 +53,21 @@ npx jsr add @worlds/sdk @wazoo/sparql-engine @worlds/libsql
 Or via CDN, with no build step:
 
 ```js
-import { /* ... */ } from "https://esm.sh/jsr/@worlds/sdk@0.9.0";
+import {} from /* ... */ "https://esm.sh/jsr/@worlds/sdk@0.9.0";
 ```
 
-| Package | Registry | Latest | Repository |
-| --- | --- | --- | --- |
-| `@worlds/sdk` | JSR | 0.9.0 | [worlds-sdk-ts](https://github.com/wazootech/worlds-sdk-ts) |
-| `@worlds/libsql` | JSR | 0.6.0 | [worlds-libsql](https://github.com/wazootech/worlds-libsql) |
-| `@worlds/sqlite` | JSR | 0.7.3 | [worlds-sqlite](https://github.com/wazootech/worlds-sqlite) |
-| `@worlds/postgres` | JSR | 0.3.0 | [worlds-postgres](https://github.com/wazootech/worlds-postgres) |
-| `@worlds/cloudflare` | JSR | 0.10.1 | [worlds-cloudflare](https://github.com/wazootech/worlds-cloudflare) |
-| `@worlds/indexeddb` | JSR | 0.2.0 | [worlds-indexeddb](https://github.com/wazootech/worlds-indexeddb) |
-| `@wazoo/sparql-engine` | JSR | 0.4.4 | [sparql-engine](https://github.com/wazootech/sparql-engine) |
-| `@wazoo/client` | JSR | 0.5.0 | [wazoo-client-ts](https://github.com/wazootech/wazoo-client-ts) |
-| `@worlds/client` | JSR | 0.5.0 | [worlds-client-ts](https://github.com/wazootech/worlds-client-ts) |
-| `@wazoo/tools` | JSR | 0.2.0 | [wazoo-tools](https://github.com/wazootech/wazoo-tools) |
+| Package                | Registry | Latest | Repository                                                          |
+| ---------------------- | -------- | ------ | ------------------------------------------------------------------- |
+| `@worlds/sdk`          | JSR      | 0.9.0  | [worlds-sdk-ts](https://github.com/wazootech/worlds-sdk-ts)         |
+| `@worlds/libsql`       | JSR      | 0.6.0  | [worlds-libsql](https://github.com/wazootech/worlds-libsql)         |
+| `@worlds/sqlite`       | JSR      | 0.7.3  | [worlds-sqlite](https://github.com/wazootech/worlds-sqlite)         |
+| `@worlds/postgres`     | JSR      | 0.3.0  | [worlds-postgres](https://github.com/wazootech/worlds-postgres)     |
+| `@worlds/cloudflare`   | JSR      | 0.10.1 | [worlds-cloudflare](https://github.com/wazootech/worlds-cloudflare) |
+| `@worlds/indexeddb`    | JSR      | 0.2.0  | [worlds-indexeddb](https://github.com/wazootech/worlds-indexeddb)   |
+| `@wazoo/sparql-engine` | JSR      | 0.4.4  | [sparql-engine](https://github.com/wazootech/sparql-engine)         |
+| `@wazoo/client`        | JSR      | 0.5.0  | [wazoo-client-ts](https://github.com/wazootech/wazoo-client-ts)     |
+| `@worlds/client`       | JSR      | 0.5.0  | [worlds-client-ts](https://github.com/wazootech/worlds-client-ts)   |
+| `@wazoo/tools`         | JSR      | 0.2.0  | [wazoo-tools](https://github.com/wazootech/wazoo-tools)             |
 
 Versions come from each registry at the time this file was written and are
 regenerated weekly — see [VERSION.md](VERSION.md). A repository with a package
@@ -100,16 +100,24 @@ deno add jsr:@wazoo/tools jsr:@wazoo/sparql-engine
 npx jsr add @wazoo/tools @wazoo/sparql-engine
 ```
 
-| Capability | Package | Repository |
-| --- | --- | --- |
-| AI SDK tools over Worlds graphs | `@wazoo/tools` | [wazoo-tools](https://github.com/wazootech/wazoo-tools) |
-| Prebuilt agent skills for the platform | via `npx` | [wazoo-skills](https://github.com/wazootech/wazoo-skills) |
-| SPARQL from the command line | via `deno`/`npx` | [wazoo-cli](https://github.com/wazootech/wazoo-cli) |
+| Capability                             | Package          | Repository                                                |
+| -------------------------------------- | ---------------- | --------------------------------------------------------- |
+| AI SDK tools over Worlds graphs        | `@wazoo/tools`   | [wazoo-tools](https://github.com/wazootech/wazoo-tools)   |
+| Prebuilt agent skills for the platform | via `npx`        | [wazoo-skills](https://github.com/wazootech/wazoo-skills) |
+| SPARQL from the command line           | via `deno`/`npx` | [wazoo-cli](https://github.com/wazootech/wazoo-cli)       |
 
 To install the packaged agent skills into a harness:
 
 ```sh
 npx skills add wazootech/wazoo-skills
+```
+
+The default flow ends in an interactive scope prompt. In CI, cron jobs, or an
+agent harness with no TTY, that prompt never resolves and the command stalls.
+Pass the flags explicitly to skip it:
+
+```sh
+npx skills add -y -a '*' wazootech/wazoo-skills
 ```
 
 [wazoo-cli](https://github.com/wazootech/wazoo-cli) is the verifiable route into
