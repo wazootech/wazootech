@@ -66,7 +66,7 @@ import { /* ... */ } from "https://esm.sh/jsr/@worlds/sdk@0.9.0";
 | `@worlds/indexeddb` | JSR | 0.2.0 | [worlds-indexeddb](https://github.com/wazootech/worlds-indexeddb) |
 | `@wazoo/sparql-engine` | JSR | 0.4.4 | [sparql-engine](https://github.com/wazootech/sparql-engine) |
 | `@wazoo/client` | JSR | 0.5.0 | [wazoo-client-ts](https://github.com/wazootech/wazoo-client-ts) |
-| `@worlds/client` | JSR | 0.4.0 | [worlds-client-ts](https://github.com/wazootech/worlds-client-ts) |
+| `@worlds/client` | JSR | 0.5.0 | [worlds-client-ts](https://github.com/wazootech/worlds-client-ts) |
 | `@wazoo/tools` | JSR | 0.2.0 | [wazoo-tools](https://github.com/wazootech/wazoo-tools) |
 
 Versions come from each registry at the time this file was written and are
