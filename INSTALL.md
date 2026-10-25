@@ -36,15 +36,18 @@ Use the hosted platform if you want worlds without running anything.
 ## 2. Build on Worlds locally
 
 You want in-process graph operations against storage you control. Install the
-SDK, one storage adapter, and the SPARQL engine (the SDK's quickstart imports
-`MemoryStore` and `WazooSparqlEngine` from it):
+SDK, the SPARQL engine, and a storage adapter. Every popular backend has a
+blessed, maintained implementation - SQLite, PostgreSQL, LibSQL/Turso,
+Cloudflare D1, and browser IndexedDB - so pick the one you already run:
 
 ```sh
-# Deno (first-class JSR support)
-deno add jsr:@worlds/sdk jsr:@worlds/libsql jsr:@wazoo/sparql-engine
+# Deno (first-class JSR support). @worlds/libsql here is just an example;
+# swap it for @worlds/sqlite, @worlds/postgres, @worlds/cloudflare,
+# or @worlds/indexeddb.
+deno add jsr:@worlds/sdk jsr:@wazoo/sparql-engine jsr:@worlds/libsql
 
 # Bun / npm / pnpm / Yarn (via JSR's npm compatibility layer)
-npx jsr add @worlds/sdk @worlds/libsql @wazoo/sparql-engine
+npx jsr add @worlds/sdk @wazoo/sparql-engine @worlds/libsql
 ```
 
 Or via CDN, with no build step:
