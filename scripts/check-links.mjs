@@ -5,8 +5,14 @@
 //   node scripts/check-links.mjs              report only
 //   node scripts/check-links.mjs --file-issue report, and open/update one tracking issue
 //
-// Exit codes:  0 = clean   1 = drift found   2 = cannot read the organization
+// Exit codes:  0 = clean, or drift that was successfully filed to the issue
+//              1 = drift found (report mode only) or crashed
+//              2 = cannot read the organization
 //
+// In --file-issue mode the exit code means "did the signal get delivered", not
+// "is there drift": once the tracking issue carries the diff, nonzero would
+// only re-label tracked drift as failure, and a red run every drift Monday
+// trains everyone to ignore the red run where the radar actually breaks.
 // The "2" case matters. A token scoped to this repository alone cannot see the
 // rest of the organization, and without the preflight below that would be
 // reported as 52 missing repositories — a false alarm that would train everyone
@@ -272,6 +278,10 @@ function main() {
 
   if (process.argv.includes("--file-issue")) {
     fileIssue(body, { clean });
+    // The signal has been delivered — issue opened, updated, or closed. Drift
+    // that nobody has acted on yet is what the issue's age is for, not this
+    // exit code.
+    process.exit(0);
   } else {
     console.log(body);
   }
