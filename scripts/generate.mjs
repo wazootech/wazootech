@@ -2,8 +2,17 @@
 // Generates REPOS.md and VERSION.md. Never hand-edit the output.
 //
 //   node scripts/generate.mjs           rewrite both files
-//   node scripts/generate.mjs --check   exit 1 if either is stale (used by CI)
+//   node scripts/generate.mjs --check   exit 0 either way; drift is a tracked
+//                                       state (the drift issue owns it), and
+//                                       a nonzero exit means THIS RADAR broke
 //
+// Exit codes:  0 = current, or stale-but-tracked   1 = crashed
+//              2 = cannot read the organization
+//
+// The "2" case matters. A token scoped to this repository alone cannot see the
+// rest of the organization, and without the preflight below that would be
+// reported as 52 missing repositories — a false alarm that would train everyone
+// to ignore this job. Fail loudly instead.
 // Design note: this records only facts that change RARELY — repository name,
 // description, archive status, published package version. It deliberately does
 // not record commit SHAs or last-push dates: those change constantly, which
@@ -280,8 +289,15 @@ async function main() {
 
   if (check) {
     if (stale > 0) {
-      console.error(`\n${stale} generated file(s) out of date.`);
-      process.exit(1);
+      // Drift is a tracked state, not a failure: check-links.mjs --file-issue
+      // delivers the signal to the drift issue, so exiting nonzero here would
+      // paint every drift Monday red and bury the run where the radar actually
+      // breaks. An exit code should mean "this tool is broken", not "the world
+      // changed in a way the tool exists to report".
+      console.error(
+        `\nDRIFT: ${stale} generated file(s) out of date — tracked by the drift issue; run: node scripts/generate.mjs`,
+      );
+      process.exit(0);
     }
     console.log("generated files are up to date");
   }
