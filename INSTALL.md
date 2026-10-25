@@ -56,13 +56,13 @@ import { /* ... */ } from "https://esm.sh/jsr/@worlds/sdk@0.9.0";
 | --- | --- | --- | --- |
 | `@worlds/sdk` | JSR | 0.9.0 | [worlds-sdk-ts](https://github.com/wazootech/worlds-sdk-ts) |
 | `@worlds/libsql` | JSR | 0.6.0 | [worlds-libsql](https://github.com/wazootech/worlds-libsql) |
-| `@worlds/sqlite` | JSR | 0.7.1 | [worlds-sqlite](https://github.com/wazootech/worlds-sqlite) |
+| `@worlds/sqlite` | JSR | 0.7.3 | [worlds-sqlite](https://github.com/wazootech/worlds-sqlite) |
 | `@worlds/postgres` | JSR | 0.3.0 | [worlds-postgres](https://github.com/wazootech/worlds-postgres) |
-| `@worlds/cloudflare` | JSR | 0.8.0 | [worlds-cloudflare](https://github.com/wazootech/worlds-cloudflare) |
+| `@worlds/cloudflare` | JSR | 0.10.1 | [worlds-cloudflare](https://github.com/wazootech/worlds-cloudflare) |
 | `@worlds/indexeddb` | JSR | 0.2.0 | [worlds-indexeddb](https://github.com/wazootech/worlds-indexeddb) |
-| `@wazoo/sparql-engine` | JSR | 0.4.2 | [sparql-engine](https://github.com/wazootech/sparql-engine) |
-| `@wazoo/client` | JSR | 0.2.0 | [wazoo-client-ts](https://github.com/wazootech/wazoo-client-ts) |
-| `@worlds/client` | JSR | 0.2.1 | [worlds-client-ts](https://github.com/wazootech/worlds-client-ts) |
+| `@wazoo/sparql-engine` | JSR | 0.4.4 | [sparql-engine](https://github.com/wazootech/sparql-engine) |
+| `@wazoo/client` | JSR | 0.5.0 | [wazoo-client-ts](https://github.com/wazootech/wazoo-client-ts) |
+| `@worlds/client` | JSR | 0.4.0 | [worlds-client-ts](https://github.com/wazootech/worlds-client-ts) |
 | `@wazoo/tools` | JSR | 0.2.0 | [wazoo-tools](https://github.com/wazootech/wazoo-tools) |
 
 Versions come from each registry at the time this file was written and are
