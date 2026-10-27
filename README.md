@@ -28,7 +28,6 @@ the repositories that make up the platform.
 | **Control plane** | [wazoo-api](https://github.com/wazootech/wazoo-api) | Platform API for organizations, worlds, tokens, usage and billing |
 | **Data plane** | [worlds-api](https://github.com/wazootech/worlds-api) | World data, lifecycle, storage and keys; search, SPARQL, import and export |
 | **Management UI** | [wazoo-console](https://github.com/wazootech/wazoo-console) | The web console for managing world models |
-| | [wazoo-desktop](https://github.com/wazootech/wazoo-desktop) | Native desktop app |
 | **Clients** | [wazoo-client-ts](https://github.com/wazootech/wazoo-client-ts) | `@wazoo/client` — TypeScript client for the platform API |
 | | [worlds-client-ts](https://github.com/wazootech/worlds-client-ts) | `@worlds/client` — generated client for the data-plane API |
 | **Core SDK** | [worlds-sdk-ts](https://github.com/wazootech/worlds-sdk-ts) | `@worlds/sdk` — embeddable SDK for in-process graph operations |
