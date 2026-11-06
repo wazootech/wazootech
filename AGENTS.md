@@ -134,3 +134,13 @@ in the internal harness, not here.
 If a claim in this repository is wrong, the fix is almost never more words here.
 It is either a correction in the linked repository, or a link to the right one.
 Write the shortest thing that makes the map true.
+
+## Code health
+
+Family-wide rules live in the [wazootech workspace constitution](https://github.com/wazootech/workspace/blob/main/AGENTS.md#code-health-standards); this repo's specifics:
+
+- Before pushing, run `node scripts/generate.mjs --check` (the first step of the upkeep workflow).
+- `.github/workflows/secret-scan.yml` runs gitleaks on every PR and push to `main`.
+- Actions in `.github/workflows/` are pinned to commit SHAs. Renovate config lives at `.github/renovate.json` so the root file cap above is unchanged.
+- `.github/CODEOWNERS` assigns `* @EthanThatOneKid`.
+- `.github/workflows/code-health.yml` is warn-only: it flags long files and TODO/FIXME without an issue link in `scripts/*.mjs`, and never fails the build.
