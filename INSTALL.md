@@ -10,6 +10,14 @@ Every package version below was verified against its registry when this file was
 written. Each repository's own README is authoritative for its API — this file
 deliberately does not restate it.
 
+To let a coding agent do the setup, paste it this prompt:
+
+```text
+Read https://github.com/wazootech/wazootech/blob/main/INSTALL.md. Ask me which
+of the three ways in I want. Check that I have that path's prerequisites before
+you change anything on my machine, and install only what that path lists.
+```
+
 ---
 
 ## 1. Use the hosted platform
@@ -108,7 +116,7 @@ npx jsr add @wazoo/tools @wazoo/sparql-engine
 | -------------------------------------- | ---------------- | --------------------------------------------------------- |
 | AI SDK tools over Worlds graphs        | `@wazoo/tools`   | [wazoo-tools](https://github.com/wazootech/wazoo-tools)   |
 | Prebuilt agent skills for the platform | via `npx`        | [wazoo-skills](https://github.com/wazootech/wazoo-skills) |
-| SPARQL from the command line           | via `deno`/`npx` | [wazoo-cli](https://github.com/wazootech/wazoo-cli)       |
+| SPARQL from the command line           | not published    | [wazoo-cli](https://github.com/wazootech/wazoo-cli)       |
 
 To install the packaged agent skills into a harness:
 
@@ -126,7 +134,10 @@ npx skills add -y -a '*' wazootech/wazoo-skills
 
 [wazoo-cli](https://github.com/wazootech/wazoo-cli) is the verifiable route into
 a graph — SHACL validation and SPARQL querying from a terminal, which makes it
-the fastest way to check that what an agent claims is actually in the store.
+the fastest way to check that what an agent claims is actually in the store. It
+is not published right now: every JSR version is yanked and it is not on npm, so
+its install commands fail. Until it republishes, call the Platform API directly;
+the CLI reference on docs.wazoo.dev says the same.
 
 ---
 
